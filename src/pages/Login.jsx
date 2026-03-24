@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/authcontext';
 import { useNavigate } from 'react-router-dom';
 import loginIllustration from '../assests/login-sidebar.png';
-import logo from '../assests/ems.png';
+import logo from '../assests/loginlogo.jpeg';
 import  BASE_URL  from "../utils/apiConfig";
 // Material UI imports
 import {
@@ -118,7 +118,8 @@ const Login = () => {
             src={logo}
             alt="EMS Logo"
             sx={{
-              width: 140,
+              width: 210,
+              maxWidth: '70%',
               height: 'auto',
               mb: 3,
               mx: 'auto',
