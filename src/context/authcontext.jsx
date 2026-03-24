@@ -24,9 +24,8 @@ const AuthContext = ({children}) => {
       setloading(false)
      }
      }catch(error){
-       if(error.response && !error.response.data.error){
-        setUser(null)
-       }
+       setUser(null)
+       localStorage.removeItem('token')
      } finally{
       setloading(false)
      }
