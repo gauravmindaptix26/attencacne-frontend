@@ -46,11 +46,11 @@ const Login = () => {
         }
       }
     } catch (error) {
-      if (error.response && !error.response.data.success) {
-        setError(error.response.data.error);
-      } else {
-        setError('Server Error');
-      }
+      setError(
+        error.response?.data?.error ||
+        error.message ||
+        'Server Error'
+      );
     }
   };
 
