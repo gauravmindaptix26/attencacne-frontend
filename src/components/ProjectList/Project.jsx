@@ -20,6 +20,8 @@ import {
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import axios from "axios";
 import { getEmployees } from "../../utils/ProjectHelper";
 import { useNavigate } from "react-router-dom";
@@ -49,6 +51,18 @@ const resourceTypes = [
   { value: "other", label: "Other" },
 ];
 
+const formatFileSize = (size) => {
+  if (!size) {
+    return "0 KB";
+  }
+
+  if (size < 1024 * 1024) {
+    return `${Math.max(1, Math.round(size / 1024))} KB`;
+  }
+
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+};
+
 const Project = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState({
@@ -64,6 +78,7 @@ const Project = () => {
     sharedResources: [{ ...emptyResource }],
   });
   const [employees, setEmployees] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -72,6 +87,7 @@ const Project = () => {
       const emps = await getEmployees();
       setEmployees(emps || []);
     };
+
     fetchAllEmployees();
   }, []);
 
@@ -116,6 +132,25 @@ const Project = () => {
     }));
   };
 
+  const handleFileSelection = (event) => {
+    const files = Array.from(event.target.files || []);
+    if (!files.length) {
+      return;
+    }
+
+    setSelectedFiles((prev) => {
+      const existingKeys = new Set(prev.map((file) => `${file.name}-${file.size}`));
+      const uniqueFiles = files.filter((file) => !existingKeys.has(`${file.name}-${file.size}`));
+      return [...prev, ...uniqueFiles];
+    });
+
+    event.target.value = "";
+  };
+
+  const removeSelectedFile = (index) => {
+    setSelectedFiles((prev) => prev.filter((_, fileIndex) => fileIndex !== index));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
@@ -136,8 +171,14 @@ const Project = () => {
       ),
     };
 
+    const formData = new FormData();
+    formData.append("projectData", JSON.stringify(payload));
+    selectedFiles.forEach((file) => {
+      formData.append("sharedFiles", file);
+    });
+
     try {
-      const response = await axios.put(`${BASE_URL}/Project/add`, payload, {
+      const response = await axios.put(`${BASE_URL}/Project/add`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -300,8 +341,8 @@ const Project = () => {
                 </Select>
               </FormControl>
               <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: "block" }}>
-                Internal team selection is optional. You can create a project with only external collaborators
-                or shared file links.
+                Internal team selection is optional. You can create a project with only external collaborators,
+                only shared links, only uploaded files, or all of them together.
               </Typography>
             </Grid>
 
@@ -315,6 +356,160 @@ const Project = () => {
                 multiline
                 rows={4}
               />
+            </Grid>
+
+            <Grid xs={12}>
+              <Divider />
+            </Grid>
+
+            <Grid xs={12}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Box>
+                  <Typography variant="h6" fontWeight="bold">
+                    Shared Files And Links
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Project documents ko link bhi kar sakte ho aur direct upload bhi.
+                  </Typography>
+                </Box>
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  onClick={() => addGroupItem("sharedResources", emptyResource)}
+                >
+                  Add Link
+                </Button>
+              </Stack>
+            </Grid>
+
+            {project.sharedResources.map((resource, index) => (
+              <Grid xs={12} key={`resource-${index}`}>
+                <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2 }}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      Shared Link {index + 1}
+                    </Typography>
+                    <IconButton color="error" onClick={() => removeGroupItem("sharedResources", index)}>
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </Stack>
+                  <Grid container spacing={2}>
+                    <Grid xs={12} md={4}>
+                      <TextField
+                        label="Resource Title"
+                        value={resource.title}
+                        onChange={(event) =>
+                          handleArrayChange("sharedResources", index, "title", event.target.value)
+                        }
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                      <FormControl fullWidth>
+                        <InputLabel>Type</InputLabel>
+                        <Select
+                          value={resource.resourceType}
+                          label="Type"
+                          onChange={(event) =>
+                            handleArrayChange(
+                              "sharedResources",
+                              index,
+                              "resourceType",
+                              event.target.value
+                            )
+                          }
+                        >
+                          {resourceTypes.map((type) => (
+                            <MenuItem key={type.value} value={type.value}>
+                              {type.label}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid xs={12} md={4}>
+                      <TextField
+                        label="Share URL"
+                        placeholder="https://drive.google.com/..."
+                        value={resource.url}
+                        onChange={(event) =>
+                          handleArrayChange("sharedResources", index, "url", event.target.value)
+                        }
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid xs={12}>
+                      <TextField
+                        label="Notes"
+                        value={resource.notes}
+                        onChange={(event) =>
+                          handleArrayChange("sharedResources", index, "notes", event.target.value)
+                        }
+                        fullWidth
+                        multiline
+                        rows={2}
+                      />
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+            ))}
+
+            <Grid xs={12}>
+              <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2 }}>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={2}
+                  justifyContent="space-between"
+                  alignItems={{ xs: "flex-start", md: "center" }}
+                  mb={selectedFiles.length ? 2 : 0}
+                >
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      Upload Project Files
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      PDFs, docs, images, sheets, zips ya doosri project files yahan upload kar sakte ho.
+                    </Typography>
+                  </Box>
+                  <Button component="label" variant="outlined" startIcon={<UploadFileIcon />}>
+                    Select Files
+                    <input hidden multiple type="file" onChange={handleFileSelection} />
+                  </Button>
+                </Stack>
+
+                {selectedFiles.length > 0 ? (
+                  <Stack spacing={1.5}>
+                    {selectedFiles.map((file, index) => (
+                      <Paper
+                        key={`${file.name}-${file.size}-${index}`}
+                        variant="outlined"
+                        sx={{ p: 1.5, borderRadius: 2 }}
+                      >
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Stack direction="row" spacing={1.5} alignItems="center">
+                            <InsertDriveFileOutlinedIcon color="action" />
+                            <Box>
+                              <Typography variant="body2" fontWeight="bold">
+                                {file.name}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {formatFileSize(file.size)}
+                              </Typography>
+                            </Box>
+                          </Stack>
+                          <IconButton color="error" onClick={() => removeSelectedFile(index)}>
+                            <DeleteOutlineIcon />
+                          </IconButton>
+                        </Stack>
+                      </Paper>
+                    ))}
+                  </Stack>
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    No files selected yet.
+                  </Typography>
+                )}
+              </Paper>
             </Grid>
 
             <Grid xs={12}>
@@ -424,97 +619,6 @@ const Project = () => {
                           )
                         }
                         fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            ))}
-
-            <Grid xs={12}>
-              <Divider />
-            </Grid>
-
-            <Grid xs={12}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography variant="h6" fontWeight="bold">
-                  Shared Files And Links
-                </Typography>
-                <Button
-                  startIcon={<AddCircleOutlineIcon />}
-                  onClick={() => addGroupItem("sharedResources", emptyResource)}
-                >
-                  Add Resource
-                </Button>
-              </Stack>
-            </Grid>
-
-            {project.sharedResources.map((resource, index) => (
-              <Grid xs={12} key={`resource-${index}`}>
-                <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2 }}>
-                  <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      Resource {index + 1}
-                    </Typography>
-                    <IconButton color="error" onClick={() => removeGroupItem("sharedResources", index)}>
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </Stack>
-                  <Grid container spacing={2}>
-                    <Grid xs={12} md={4}>
-                      <TextField
-                        label="Resource Title"
-                        value={resource.title}
-                        onChange={(event) =>
-                          handleArrayChange("sharedResources", index, "title", event.target.value)
-                        }
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid xs={12} md={4}>
-                      <FormControl fullWidth>
-                        <InputLabel>Type</InputLabel>
-                        <Select
-                          value={resource.resourceType}
-                          label="Type"
-                          onChange={(event) =>
-                            handleArrayChange(
-                              "sharedResources",
-                              index,
-                              "resourceType",
-                              event.target.value
-                            )
-                          }
-                        >
-                          {resourceTypes.map((type) => (
-                            <MenuItem key={type.value} value={type.value}>
-                              {type.label}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid xs={12} md={4}>
-                      <TextField
-                        label="Share URL"
-                        placeholder="https://drive.google.com/..."
-                        value={resource.url}
-                        onChange={(event) =>
-                          handleArrayChange("sharedResources", index, "url", event.target.value)
-                        }
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid xs={12}>
-                      <TextField
-                        label="Notes"
-                        value={resource.notes}
-                        onChange={(event) =>
-                          handleArrayChange("sharedResources", index, "notes", event.target.value)
-                        }
-                        fullWidth
-                        multiline
-                        rows={2}
                       />
                     </Grid>
                   </Grid>

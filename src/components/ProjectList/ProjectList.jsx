@@ -159,7 +159,7 @@ const ProjectList = () => {
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>Dates</TableCell>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>Internal Team</TableCell>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>External</TableCell>
-                  <TableCell sx={{ color: "white", fontWeight: "bold" }}>Shared Links</TableCell>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}>Shared Items</TableCell>
                   <TableCell sx={{ color: "white", fontWeight: "bold" }}>Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -258,7 +258,7 @@ const ProjectList = () => {
                         <Typography fontWeight="bold">Shared Files</Typography>
                       </Stack>
                       <Typography variant="h5">{selectedProject.sharedResources?.length || 0}</Typography>
-                      <Typography color="text.secondary">Drive links and documents</Typography>
+                      <Typography color="text.secondary">Links and uploaded files</Typography>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -357,7 +357,18 @@ const ProjectList = () => {
                                   label={resource.resourceType || "other"}
                                   sx={{ textTransform: "capitalize" }}
                                 />
+                                <Chip
+                                  size="small"
+                                  color={resource.sourceType === "upload" ? "primary" : "success"}
+                                  label={resource.sourceType === "upload" ? "file" : "link"}
+                                  sx={{ textTransform: "capitalize" }}
+                                />
                               </Stack>
+                              {resource.fileName && (
+                                <Typography variant="body2" color="text.secondary">
+                                  {resource.fileName}
+                                </Typography>
+                              )}
                               <Typography variant="body2" color="text.secondary">
                                 {resource.notes || "No notes added."}
                               </Typography>
@@ -370,7 +381,7 @@ const ProjectList = () => {
                               sx={{ alignSelf: "center" }}
                             >
                               <Button variant="outlined" endIcon={<LaunchIcon />}>
-                                Open Link
+                                {resource.sourceType === "upload" ? "Open File" : "Open Link"}
                               </Button>
                             </Link>
                           </Stack>
