@@ -24,7 +24,6 @@ import Marking from './components/department/Attendace/Marking';
 import AttendanceList from './components/department/Attendace/AttendanceList';
 import Project from './components/ProjectList/Project';
 import ProjectList from './components/ProjectList/ProjectList';
-import TeamDetail from './components/ProjectList/TeamDetail';
 function App() {
 
   return (
@@ -57,7 +56,6 @@ function App() {
 <Route path="/admin-dashboard/setting" element={<Setting/>}></Route>
 <Route path="/admin-dashboard/Project" element={<Project/>}></Route>
 <Route path="/admin-dashboard/ProjectList" element={<ProjectList/>}></Route>
-<Route path="/admin-dashboard/ProjectList/teamDetail" element={<TeamDetail/>}></Route>
 
       </Route>
       

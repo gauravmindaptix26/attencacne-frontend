@@ -3,23 +3,22 @@ import  BASE_URL  from "../utils/apiConfig";
 export const getEmployees = async () => {
   try {
     const response = await axios.get(
-      `${ BASE_URL }/Project`,
+      `${BASE_URL}/Project`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
-console.log(response);
+
     if (response.data.success) {
-      return response.data.employees; 
-     
+      return response.data.employees;
     } else {
-      return []; 
+      return [];
     }
   } catch (error) {
     console.error("Error fetching employees:", error);
-    return []; 
+    return [];
   }
 };
 // Fetch all projects for employee selection

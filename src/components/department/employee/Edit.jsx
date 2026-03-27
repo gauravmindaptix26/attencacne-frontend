@@ -103,7 +103,7 @@ const Edit = () => {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             {/* Name */}
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <TextField
                 name="name"
                 label="Employee Name"
@@ -125,7 +125,7 @@ const Edit = () => {
             </Grid>
 
             {/* Marital Status */}
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <FormControl
                 fullWidth
                 required
@@ -155,7 +155,7 @@ const Edit = () => {
             </Grid>
 
             {/* Designation */}
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <TextField
                 name="designation"
                 label="Designation"
@@ -177,7 +177,7 @@ const Edit = () => {
             </Grid>
 
             {/* Department */}
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <FormControl
                 fullWidth
                 required
@@ -210,7 +210,7 @@ const Edit = () => {
             </Grid>
 
             {/* Salary */}
-            <Grid item xs={12} md={6}>
+            <Grid xs={12} md={6}>
               <TextField
                 name="salary"
                 label="Salary"

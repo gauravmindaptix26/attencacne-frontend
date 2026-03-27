@@ -29,9 +29,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
       const response = await axios.post(`${BASE_URL}/auth/login`, {
-        email,
+        email: email.trim().toLowerCase(),
         password,
       });
 
@@ -68,7 +69,6 @@ const Login = () => {
     >
       {/* Left section */}
       <Grid
-        item
         sx={{
           width: { xs: '100%', md: '95%' },
           backgroundColor: '#f9fafb',
@@ -98,7 +98,6 @@ const Login = () => {
 
       {/* Right section */}
       <Grid
-        item
         component={Paper}
         elevation={0}
         square

@@ -146,7 +146,7 @@ const Add = () => {
             justifyContent="center"
           >
             {/* Department */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 select
                 label="Department"
@@ -166,7 +166,7 @@ const Add = () => {
             </Grid>
 
             {/* Employee */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 select
                 label="Employee"
@@ -187,7 +187,7 @@ const Add = () => {
             </Grid>
 
             {/* Basic Salary */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 type="number"
                 label="Basic Salary"
@@ -200,7 +200,7 @@ const Add = () => {
             </Grid>
 
             {/* Allowances */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 type="number"
                 label="Allowances"
@@ -213,7 +213,7 @@ const Add = () => {
             </Grid>
 
             {/* Deductions */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 type="number"
                 label="Deductions"
@@ -226,7 +226,7 @@ const Add = () => {
             </Grid>
 
             {/* Pay Date */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 type="date"
                 label="Pay Date"

@@ -130,7 +130,7 @@ const AddLeave = () => {
             justifyContent="center"
           >
             {/* Leave Type */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 select
                 label="Leave Type"
@@ -152,7 +152,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* Start Date */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 type="date"
                 label="Start Date"
@@ -166,7 +166,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* End Date */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 type="date"
                 label="End Date"
@@ -180,7 +180,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* Designation */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 label="Designation"
                 name="designation"
@@ -195,7 +195,7 @@ const AddLeave = () => {
             {/* Reason */}
             {/* Reason */}
 {/* Reason */}
-<Grid item xs={12} sm={6}>
+<Grid xs={12} sm={6}>
   <TextField
     label="Reason"
     name="reason"
@@ -220,7 +220,7 @@ const AddLeave = () => {
 
 
             {/* Total Entitlement */}
-            <Grid item xs={12} sm={4}>
+            <Grid xs={12} sm={4}>
               <TextField
                 type="number"
                 label="Total Entitlement"
@@ -232,7 +232,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* Total Availed */}
-            <Grid item xs={12} sm={4}>
+            <Grid xs={12} sm={4}>
               <TextField
                 type="number"
                 label="Total Availed"
@@ -244,7 +244,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* Balance */}
-            <Grid item xs={12} sm={4}>
+            <Grid xs={12} sm={4}>
               <TextField
                 type="number"
                 label="Balance"
@@ -256,7 +256,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* Recommended By */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 label="Recommended By"
                 name="recommendedBy"
@@ -267,7 +267,7 @@ const AddLeave = () => {
             </Grid>
 
             {/* Approved By */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 label="Approved By"
                 name="approvedBy"

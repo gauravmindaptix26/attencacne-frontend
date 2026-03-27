@@ -160,7 +160,7 @@ const Add = () => {
             justifyContent="center"
           >
             {/* Name */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="name"
                 label="Name"
@@ -173,7 +173,7 @@ const Add = () => {
             </Grid>
 
             {/* Email */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="email"
                 label="Email"
@@ -187,7 +187,7 @@ const Add = () => {
             </Grid>
 
             {/* Employee ID */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="employeeId"
                 label="Employee ID"
@@ -200,7 +200,7 @@ const Add = () => {
             </Grid>
 
             {/* DOB */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="dob"
                 label="Date of Birth"
@@ -215,7 +215,7 @@ const Add = () => {
             </Grid>
 
             {/* Gender */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Gender</InputLabel>
                 <Select
@@ -235,7 +235,7 @@ const Add = () => {
             </Grid>
 
             {/* Marital Status */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Marital Status</InputLabel>
                 <Select
@@ -254,7 +254,7 @@ const Add = () => {
             </Grid>
 
             {/* Designation */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="designation"
                 label="Designation"
@@ -267,7 +267,7 @@ const Add = () => {
             </Grid>
 
             {/* Department */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Department</InputLabel>
                 <Select
@@ -289,7 +289,7 @@ const Add = () => {
             </Grid>
 
             {/* Salary */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="salary"
                 label="Salary"
@@ -303,7 +303,7 @@ const Add = () => {
             </Grid>
 
             {/* Password */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <TextField
                 name="password"
                 label="Password"
@@ -317,7 +317,7 @@ const Add = () => {
             </Grid>
 
             {/* Role */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Role</InputLabel>
                 <Select
@@ -336,7 +336,7 @@ const Add = () => {
             </Grid>
 
             {/* Projects */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Projects</InputLabel>
                 <Select
@@ -357,7 +357,7 @@ const Add = () => {
             </Grid>
 
             {/* Image Upload */}
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <Button
                 variant="outlined"
                 component="label"
